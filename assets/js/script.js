@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  var BASE_URL = "http://localhost/projek-sewaalatdaki/";
+  var BASE_URL = "http://localhost/projek-sewaAlatDaki/";
 
   // make modal
   $('.close').on('click', function() {
@@ -18,24 +18,26 @@ $(document).ready(function(){
       $('.modal-body input[type=hidden]').remove();
     }
   }
+  
+  var modalData = "";
+  var titleModalData = "";
+  var dataController = "";
 
   function createModalNamingVariabel(modal) {
-    var modalData = "";
-    var modalDataPage = "";
-    var titleModalData = "";
     var words = modal.split(" ");
     var countWords = words.length;
     for (let i = 0; i < countWords; i++) {
       modalData += words[i].charAt(0).toUpperCase() + words[i].slice(1);
       titleModalData += words[i].charAt(0).toUpperCase() + words[i].slice(1) + " ";
+      dataController = modalData.toLowerCase();
     }
-    for (let i = 0; i < countWords; i++) {
-      if(i == 0) {
-        modalDataPage = words[i];
-      } else {
-        modalDataPage += words[i].charAt(0).toUpperCase() + words[i].slice(1);
-      }
-    }
+    // for (let i = 0; i < countWords; i++) {
+    //   if(i == 0) {
+    //     modalDataPage = words[i];
+    //   } else {
+    //     modalDataPage += words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    //   }
+    // }
   }
 
   $('.btn-modalTambah').on('click', function() {
@@ -43,7 +45,10 @@ $(document).ready(function(){
     createModalNamingVariabel(modal);
     $('#modal').css("display", "block");
     $('.title').html("Tambah Data " + titleModalData + "");
-    $('.form-contol').attr("action", BASE_URL + "index.php?view=admin&page=" + modalDataPage + "&aksi=tambah");
+    titleModalData = "";
+    $('.form-contol').attr("action", BASE_URL + "" + dataController + "/prosesTambah");
+    modalData = "";
+    dataController = "";
     $('.form-contol button').text("Simpan");
   });
 
@@ -76,9 +81,12 @@ $(document).ready(function(){
     }
     $('#modal').css("display", "block");
     $('.title').html("Edit Data " + titleModalData + "");
+    titleModalData = "";
     $('.modal-body').append(`<input type="hidden" name="id` + modalData + `" id="id` + modalData + `" value="` + id + `">
     `);
-    $('.form-contol').attr("action", BASE_URL + "index.php?view=admin&page=" + modalDataPage + "&aksi=edit");
+    modalData = "";
+    $('.form-contol').attr("action", BASE_URL + "" + dataController + "/prosesUpdateById");
+    dataController = "";
     $('.form-contol button').text("Update");
   });
 
@@ -114,8 +122,34 @@ $(document).ready(function(){
     }, 800);
   });
 
+  // button tambah jumlah sewa barang
+  $('#detailRekamBarang').on('click', '.btnPlusJumlah', function() {
+    var currentRow = $(this).closest("tr");
+    var colBank = currentRow.find("td:eq(3) input").val();
+    currentRow.find("td:eq(3) input").val(parseInt(colBank) + 1);
+  });
+
+  // button kurangi jumlah sewa barang
+  $('#detailRekamBarang').on('click', '.btnMinJumlah', function() {
+    var currentRow = $(this).closest("tr");
+    var colBank = currentRow.find("td:eq(3) input").val();
+    currentRow.find("td:eq(3) input").val((parseInt(colBank) > 1 ? (parseInt(colBank) - 1) : 1));
+  });
+
   // button rekam barang
   $('#btn-rekamBarang').on('click', function() {
+    var idBarang = $('#cariIdBarang').val();
+    $.ajax({
+      url: BASE_URL + 'barang/getBarangById',
+      type: 'POST',
+      data: { idBarang: idBarang },
+      dataType: 'json',
+      success: function(response) { 
+          if (response.status === "sukses") {
+            
+          }
+      }
+    })
     $("#detailRekamBarang").append(`<tr>
     <td>1.</td>
     <td>
@@ -126,52 +160,19 @@ $(document).ready(function(){
     </td>
     <td>Rp. 100000</td>
     <td>
-      <button type="button" class="btn btn-info" id="btnMinJumlah">-</button>
-      <input type="text" name="jumlahSewaBarang" id="jumlahSewaBarang" value="1">
-      <button type="button" class="btn btn-info" id="btnPlusJumlah">+</button>
+      <button type="button" class="btn btn-info btnMinJumlah">-</button>
+      <input type="text" name="jumlahSewaBarang" class="jumlahSewaBarang" value="1">
+      <button type="button" class="btn btn-info btnPlusJumlah">+</button>
     </td>
     <td>
-      <button type="button" class="btn btn-danger btn-hapusRekamBarang">Batal</button>
+      <button type="button" class="btn btn-danger btnHapusRekamBarang">Batal</button>
     </td>
   </tr>`);
   });
 
-  // button tambah jumlah sewa barang
-  $('#btnPlusJumlah').on('click', function() {
-    var x = $("#jumlahSewaBarang").val();
-    $("#jumlahSewaBarang").val(parseInt(x) + 1);
-  });
-
-
-  // button kurangi jumlah sewa barang
-  $('#btnMinJumlah').on('click', function() {
-    var x = $("#jumlahSewaBarang").val();
-    if(x > 1) {
-      $("#jumlahSewaBarang").val(parseInt(x) - 1);
-    }
-  });
-
-  $('#detailRekamBarang').on('click', '.btn-hapusRekamBarang', function() {
-    alert("fwef")
-    var table = document.getElementById("tabel_detailrekam");
-    var rowCount = table.rows.length - 1;
-
-    for (var i = rowCount; i > 0; i--) {
-      var valueCell = document.getElementById("tabel_detailrekam").rows[i].cells.item(0).innerHTML;
-      valueCell = $(valueCell).data('idbuku');
-      if (bukuId == valueCell) {
-          table.deleteRow(i);
-          var rowCount = table.rows.length - 1;
-
-          if (rowCount < 1) {
-              $('#detail_peminjaman').hide();
-          } else {
-              break;
-          }
-      } else {
-          continue;
-      }
-    }
+  $('#detailRekamBarang').on('click', '.btnHapusRekamBarang', function() {
+    var currentRow = $(this).closest("tr");
+    currentRow.remove();
 });
 
   // button hapus rekam barang
@@ -188,6 +189,7 @@ $(document).ready(function(){
     });
   });
 
+  // preview gambar when auto change
   $('#gambar').change(function(){
     const file = this.files[0];
     if (file){
@@ -197,6 +199,6 @@ $(document).ready(function(){
     }
     reader.readAsDataURL(file);
     }
-});
+  });
 
 })
