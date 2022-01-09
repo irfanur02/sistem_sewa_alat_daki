@@ -301,7 +301,7 @@ tbody::-webkit-scrollbar-thumb:hover {
 table {
 	border-collapse: collapse;
 	width: 100%;
-	/* min-width: max-content; */
+	margin-bottom: 1em;
 }
 
 thead,
@@ -350,7 +350,8 @@ tr:hover {
 }
 
 tbody {
-	height: 350px;
+	height: fit-content;
+	max-height: 350px;
 	overflow-y: overlay;
 }
 
@@ -377,6 +378,10 @@ tbody .badge {
 	margin: 0 .3em;
 	width: 50px;
 	text-align: center;
+}
+
+#btn-prosesRekamBarang {
+	display: none;
 }
 
 .badge.badge-success {
@@ -419,12 +424,25 @@ tbody .badge {
 
 .col-3 {
 	width: 30%;
-	/* min-width: max-content; */
 	margin-right: 10px;
 }
 
 .col-7 {
 	width: 70%;
+}
+
+.content-col-3 {
+	width: 30%;
+}
+
+.content-col-3.top,
+.content-col-7.top {
+	align-self: flex-start;
+}
+
+.content-col-7 {
+	width: 70%;
+	margin-right: 20px;
 }
 
 .col-7.col-10 {
@@ -565,7 +583,7 @@ tbody .badge {
 	background-color: #fefefe;
 	margin: auto;
 	border: 1px solid #333;
-	width: 30%;
+	width: 40%;
 	min-width: max-content;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	-webkit-animation-name: downModal;

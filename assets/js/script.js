@@ -2,20 +2,29 @@ $(document).ready(function(){
 
   var BASE_URL = "http://localhost/projek-sewaAlatDaki/";
 
+  $('#pembayaran').hide();
+
   // make modal
   $('.close').on('click', function() {
     $('#modal').css("display", "none");
     $('input[type=text]').val('');
     $('input[type=radio]').eq(0).prop('checked', 'true');
     $('.modal-body input[type=hidden]').remove();
+    $('#tglSewa, #tglKembali').val('');
+    $('#pembayaran').hide();
+    $('.modal input[type=radio]').eq(0).prop('checked', 'false');
+    $('.modal input[type=radio]').eq(1).prop('checked', 'false');
   });
   
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
-      $('input[type=text]').val('');
+      $('.modal input[type=text]').val('');
       $('input[type=radio]').eq(0).prop('checked', 'true');
       $('.modal-body input[type=hidden]').remove();
+      $('#tglSewa, #tglKembali').val('');
+      $('#pembayaran').hide();
+      $('.modal input[type=radio]').eq(1).prop('checked', 'false');
     }
   }
   
@@ -113,6 +122,15 @@ $(document).ready(function(){
       $('.popup-content').eq(i).addClass("active");
     });
   });
+
+  // radio untuk pembayaran
+  $('.modal input[type=radio]').on('change', function() {
+    if($(this).val() == 'active') {
+      $('#pembayaran').show();
+    } else {
+      $('#pembayaran').hide();
+    }
+  });
   
   // button cancel in popup
   $('.btn-cancel').on('click', function() {
@@ -123,18 +141,21 @@ $(document).ready(function(){
   });
 
   // button tambah jumlah sewa barang
-  $('#detailRekamBarang').on('click', '.btnPlusJumlah', function() {
+  $('#detailRekamBarang').on('click', '.btn-plusJumlah', function() {
     var currentRow = $(this).closest("tr");
     var colBank = currentRow.find("td:eq(3) input").val();
     currentRow.find("td:eq(3) input").val(parseInt(colBank) + 1);
   });
 
   // button kurangi jumlah sewa barang
-  $('#detailRekamBarang').on('click', '.btnMinJumlah', function() {
+  $('#detailRekamBarang').on('click', '.btn-minJumlah', function() {
     var currentRow = $(this).closest("tr");
     var colBank = currentRow.find("td:eq(3) input").val();
     currentRow.find("td:eq(3) input").val((parseInt(colBank) > 1 ? (parseInt(colBank) - 1) : 1));
   });
+
+  // set disable date before today
+  $('#tglSewa, #tglKembali').attr('min', new Date().toISOString().split('T')[0]);
 
   // button rekam barang
   $('#btn-rekamBarang').on('click', function() {
@@ -144,49 +165,88 @@ $(document).ready(function(){
       type: 'POST',
       data: { idBarang: idBarang },
       dataType: 'json',
-      success: function(response) { 
-          if (response.status === "sukses") {
-            
-          }
-      }
-    })
-    $("#detailRekamBarang").append(`<tr>
-    <td>1.</td>
-    <td>
-      <div class="thumb">
-        <img src="` + BASE_URL + `/assets/img/tenda/tenda 1.jpg" alt="tenda 1.jpg">
-      </div>
-      <span>Tenda 1</span>
-    </td>
-    <td>Rp. 100000</td>
-    <td>
-      <button type="button" class="btn btn-info btnMinJumlah">-</button>
-      <input type="text" name="jumlahSewaBarang" class="jumlahSewaBarang" value="1">
-      <button type="button" class="btn btn-info btnPlusJumlah">+</button>
-    </td>
-    <td>
-      <button type="button" class="btn btn-danger btnHapusRekamBarang">Batal</button>
-    </td>
-  </tr>`);
-  });
-
-  $('#detailRekamBarang').on('click', '.btnHapusRekamBarang', function() {
-    var currentRow = $(this).closest("tr");
-    currentRow.remove();
-});
-
-  // button hapus rekam barang
-  $('table.btn-hapusRekamBarang').each(function(i) {
-    $(this).on('click', function() {
-      var table = document.getElementById("detailRekamBarang");
-      var rowCount = table.rows.length;
-      table.deleteRow(i);
-      for (var i = 1; i < rowCount; i++) {
-        table.deleteRow(i);
-        rowCount--;
-        i--;
+      statusCode: {
+        500: function() {
+          alert("server error");
+        }
+      },
+      success: function(response) {
+        $("#detailRekamBarang").append(`<tr>
+          <td>
+            <input type="hidden" name="idBarang" id="idBarang" value="` + response.idBarang + `">
+            1.
+          </td>
+          <td>
+            <div class="thumb">
+              <img src="` + BASE_URL + `/assets/img/` + response.folderGambar + `/` + response.gambarBarang + `" alt="` + response.namaBarang + `.jpg">
+            </div>
+            <span>` + response.namaBarang + `</span>
+          </td>
+          <td>Rp. ` + response.hargaSewa + `</td>
+          <td>
+            <button type="button" class="btn btn-info btn-minJumlah">-</button>
+            <input type="text" name="jumlahSewaBarang" class="jumlahSewaBarang" value="1">
+            <button type="button" class="btn btn-info btn-plusJumlah">+</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-hapusRekamBarang">Batal</button>
+          </td>
+        </tr>`
+        );
+        $('#cariIdBarang').val("");
+        $('#cariIdBarang').focus();
+        $('#btn-prosesRekamBarang').show();
       }
     });
+  });
+
+  // button simpan rekam barang
+  $('#btn-prosesRekamBarang').on('click', function() {
+    $('#modal').css("display", "block");
+    $('#namaPenyewa').focus();
+  })
+  
+  // button simpan data penyewa
+  $('#btn-simpanDataPenyewa').on('click', function() {
+    var nama = $("#namaPenyewa").val();
+    var noHp = $("#noHpPenyewa").val();
+    var tglSewa = $("#tglSewa").val();
+    var tglKembali = $("#tglKembali").val();
+    var dataId = [];
+    var dataJumlah = [];
+    var tb = $('#detailRekamBarang');
+    if($('.modal input[type=radio]').val() == 'active') {
+      var pembayaran = $('#pembayaran').val();
+    }
+    tb.find("tr").each(function(index, element) {
+      var id = $(element).find('td:eq(0) input').val();
+      var jumlah = $(element).find('td:eq(3) input').val();
+      dataId.push(id);
+      dataJumlah.push(jumlah);
+    });
+
+    $.ajax({
+      url: BASE_URL + 'peminjaman/storePenyewaan',
+      type: 'POST',
+      data: { dataIdBarang: dataId, dataJumlahPerBarang: dataJumlah, nama: nama, noHp: noHp, tglSewa: tglSewa, tglKembali: tglKembali, pembayaran: pembayaran },
+      dataType: 'json',
+      statusCode: {
+        500: function() {
+          alert("server error");
+        }
+      },
+      success: function(data) {
+        if(data.status == true) {
+          location.reload(true);
+        }
+      }
+    });
+  });
+  
+  // button hapus rekam barang
+  $('#detailRekamBarang').on('click', '.btn-hapusRekamBarang', function() {
+    var currentRow = $(this).closest("tr");
+    currentRow.remove();
   });
 
   // preview gambar when auto change

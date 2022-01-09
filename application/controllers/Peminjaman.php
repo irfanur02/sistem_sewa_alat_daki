@@ -14,4 +14,19 @@ class Peminjaman extends CI_Controller
     $this->load->view('admin/view_peminjaman');
     $this->load->view('admin/templates/view_footer');
   }
+
+  public function storePenyewaan()
+  {
+    $dataBarang = $this->input->post('dataIdBarang');
+    $dataJumlahBarang = $this->input->post('dataJumlahPerBarang');
+    $nama = $this->input->post('nama');
+    $noHp = $this->input->post('noHp');
+    $tglSewa = $this->input->post('tglSewa');
+    $tglKembali = $this->input->post('tglKembali');
+    $pembayaran = $this->input->post('pembayaran');
+    $result = array(
+      'status' => true
+    );
+    echo json_encode($result);
+  }
 }

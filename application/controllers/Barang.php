@@ -46,18 +46,15 @@ class Barang extends CI_Controller
   public function getBarangById()
   {
     $idBarang = $this->input->post('idBarang');
-    $where = array(
-      'id_barang' => $idBarang
-    );
-    $dataBarang = $this->ModelBarang->getDataById($where, 'barang')->row_array();
-    var_dump($dataBarang);
-    die();
+    $dataBarang = $this->ModelBarang->getDataById($idBarang)->row_array();
+    $folder = explode(" ", $dataBarang['gambarBarang']);
     $barang = array(
-      "idBarang" => $dataBarang['idBarang'],
-      "namaBarang" => $dataBarang['namaBarang'],
-      "gambarBarang" => $dataBarang['gambarBarang'],
-      "hargaSewa" => $dataBarang['hargaSewa'],
-      "stokBarang" => $dataBarang['stokBarang']
+      'idBarang' => $dataBarang['idBarang'],
+      'namaBarang' => $dataBarang['namaBarang'],
+      'folderGambar' => $folder[0],
+      'gambarBarang' => $dataBarang['gambarBarang'],
+      'hargaSewa' => $dataBarang['hargaSewa'],
+      'stokBarang' => $dataBarang['stokBarang']
     );
     echo json_encode($barang);
   }
