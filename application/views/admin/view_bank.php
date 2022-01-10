@@ -14,66 +14,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1.</td>
-          <td>BCA</td>
-          <td>
-            <div class="badge badge-success">active</div>
-          </td>
-          <td>
-            <a href="#" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="1" data-modal="bank">Edit</a>
-            <div class="popup-delete" id=popup>
-              <div class="popup-content">
-                <form action="<?php echo base_url('bank/prosesHapusById'); ?>" method="POST" class="form-popup">
-                  <input type="hidden" name="idBank" id="idBank">
-                  <button type="submit" class="btn btn-sm btn-danger">Iya</button>
-                  <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
-                </form>
+        <?php
+        $no = 1;
+        foreach ($dataBank as $rowDataBank) : ?>
+          <tr>
+            <td><?php echo $no++; ?></td>
+            <td><?php echo $rowDataBank->namaBank; ?></td>
+            <td>
+              <div class="badge badge-<?php echo $rowDataBank->status == 1 ? "success" : "danger"; ?>"><?php echo $rowDataBank->status == 1 ? "active" : "inactive"; ?></div>
+            </td>
+            <td>
+              <a href="#" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="<?php echo $rowDataBank->idBank; ?>" data-modal="bank">Edit</a>
+              <div class="popup-delete" id=popup>
+                <div class="popup-content">
+                  <form action="<?php echo base_url('bank/prosesHapusById'); ?>" method="POST" class="form-popup">
+                    <input type="hidden" name="idBank" id="idBank">
+                    <button type="submit" class="btn btn-sm btn-danger">Iya</button>
+                    <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
+                  </form>
+                </div>
+                <a href="" class="btn btn-danger btn-hapus" data-id="<?php echo $rowDataBank->idBank; ?>">Hapus</a>
               </div>
-              <a href="" class="btn btn-danger btn-hapus" data-id="1">Hapus</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>2.</td>
-          <td>Mandiri</td>
-          <td>
-            <div class="badge badge-success">active</div>
-          </td>
-          <td>
-            <a href="#" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="2" data-modal="bank">Edit</a>
-            <div class="popup-delete" id=popup>
-              <div class="popup-content">
-                <form action="<?php echo base_url('bank/prosesHapusById'); ?>" method="POST" class="form-popup">
-                  <input type="hidden" name="idBank" id="idBank">
-                  <button type="submit" class="btn btn-sm btn-danger">Iya</button>
-                  <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
-                </form>
-              </div>
-              <a href="" class="btn btn-danger btn-hapus" data-id="2">Hapus</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>3.</td>
-          <td>BNI</td>
-          <td>
-            <div class="badge badge-danger">inactive</div>
-          </td>
-          <td>
-            <a href="#" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="3" data-modal="bank">Edit</a>
-            <div class="popup-delete" id=popup>
-              <div class="popup-content">
-                <form action="<?php echo base_url('bank/prosesHapusById'); ?>" method="POST" class="form-popup">
-                  <input type="hidden" name="idBank" id="idBank">
-                  <button type="submit" class="btn btn-sm btn-danger">Iya</button>
-                  <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
-                </form>
-              </div>
-              <a href="" class="btn btn-danger btn-hapus" data-id="3">Hapus</a>
-            </div>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>
@@ -95,11 +59,11 @@
           <label class="col-3">Active</label>
           <div class="form-group col-7">
             <div class="radioButton">
-              <input type="radio" class="" name="rbStatusBank" id="active" value="active" checked="true">
+              <input type="radio" class="" name="rbStatusBank" id="active" value="1" checked="true">
               <label for="active">Active</label>
             </div>
             <div class="radioButton">
-              <input type="radio" class="" name="rbStatusBank" id="inactive" value="inactive">
+              <input type="radio" class="" name="rbStatusBank" id="inactive" value="0">
               <label for="inactive">Inactive</label>
             </div>
           </div>

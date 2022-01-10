@@ -13,74 +13,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1.</td>
-          <td>Tenda</td>
-          <td>
-            <a href="" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="1" data-modal="kategori barang">Edit</a>
-            <div class="popup-delete" id=popup>
-              <div class="popup-content">
-                <form action="<?php echo base_url('kategoribarang/prosesHapusById'); ?>" method="POST" class="form-popup">
-                  <input type="hidden" name="idKategoriBarang" id="idKategoriBarang">
-                  <button type="submit" class="btn btn-sm btn-danger">Iya</button>
-                  <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
-                </form>
+        <?php
+        $no = 1;
+        foreach ($dataKategori as $rowDataKategori) : ?>
+          <tr>
+            <td><?php echo $no++; ?></td>
+            <td><?php echo $rowDataKategori->namaKategori; ?></td>
+            <td>
+              <a href="" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="<?php echo $rowDataKategori->idKategori; ?>" data-modal="kategori barang">Edit</a>
+              <div class="popup-delete" id=popup>
+                <div class="popup-content">
+                  <form action="<?php echo base_url('kategoribarang/prosesHapusById'); ?>" method="POST" class="form-popup">
+                    <input type="hidden" name="idKategoriBarang" id="idKategoriBarang">
+                    <button type="submit" class="btn btn-sm btn-danger">Iya</button>
+                    <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
+                  </form>
+                </div>
+                <a href="" class="btn btn-danger btn-hapus" data-id="<?php echo $rowDataKategori->idKategori; ?>">Hapus</a>
               </div>
-              <a href="" class="btn btn-danger btn-hapus" data-id="1">Hapus</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>2.</td>
-          <td>Ransel</td>
-          <td>
-            <a href="#" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="2" data-modal="kategori barang">Edit</a>
-            <div class="popup-delete" id=popup>
-              <div class="popup-content">
-                <form action="<?php echo base_url('kategoribarang/prosesHapusById'); ?>" method="POST" class="form-popup">
-                  <input type="hidden" name="idKategoriBarang" id="idKategoriBarang">
-                  <button type="submit" class="btn btn-sm btn-danger">Iya</button>
-                  <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
-                </form>
-              </div>
-              <a href="" class="btn btn-danger btn-hapus" data-id="2">Hapus</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>3.</td>
-          <td>Kompor Mini</td>
-          <td>
-            <a href="#" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="3" data-modal="kategori barang">Edit</a>
-            <div class="popup-delete" id=popup>
-              <div class="popup-content">
-                <form action="<?php echo base_url('kategoribarang/prosesHapusById'); ?>" method="POST" class="form-popup">
-                  <input type="hidden" name="idKategoriBarang" id="idKategoriBarang">
-                  <button type="submit" class="btn btn-sm btn-danger">Iya</button>
-                  <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
-                </form>
-              </div>
-              <a href="" class="btn btn-danger btn-hapus" data-id="3">Hapus</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>4.</td>
-          <td>Tongkat</td>
-          <td>
-            <a href="#" class="btn btn-link-warning btn-modalEdit" style="margin-right: 5px;" data-id="4" data-modal="kategori barang">Edit</a>
-            <div class="popup-delete" id=popup>
-              <div class="popup-content">
-                <form action="<?php echo base_url('kategoribarang/prosesHapusById'); ?>" method="POST" class="form-popup">
-                  <input type="hidden" name="idKategoriBarang" id="idKategoriBarang">
-                  <button type="submit" class="btn btn-sm btn-danger">Iya</button>
-                  <button type="button" class="btn btn-sm btn-gray btn-cancel">Tidak</button>
-                </form>
-              </div>
-              <a href="" class="btn btn-danger btn-hapus" data-id="4">Hapus</a>
-            </div>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>

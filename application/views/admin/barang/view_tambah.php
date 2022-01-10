@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="col">
-      <form action="<?php echo base_url('barang/prosesTambah'); ?>" method="POST">
+      <form action="<?php echo base_url('barang/prosesTambah'); ?>" method="POST" enctype="multipart/form-data">
         <div class="row">
           <label for="barang" class="col-3">Barang</label>
           <input type="text" class="col-7" name="barang" id="barang">
@@ -19,9 +19,9 @@
           <label for="kategori" class="col-3">Kategori</label>
           <select name="kategori" id="kategori" class="col-7">
             <option selected>Kategori</option>
-            <option value="tenda">Tenda</option>
-            <option value="kompor">Kompor</option>
-            <option value="tongkat">Tongkat</option>
+            <?php foreach ($dataKategori as $rowDataKategori) : ?>
+              <option value="<?php echo $rowDataKategori->idKategori; ?>"><?php echo $rowDataKategori->namaKategori; ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
         <div class="row">
@@ -29,7 +29,7 @@
           <input type="text" class="col-7" name="jumlah" id="jumlahBarang">
         </div>
         <div class="row">
-          <label for="harga" class="col-3">Harga Barang (Rp.)</label>
+          <label for="harga" class="col-3">Harga Sewa (Rp.)</label>
           <input type="text" class="col-7" name="harga" id="harga">
         </div>
         <div class="row">
