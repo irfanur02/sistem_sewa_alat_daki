@@ -660,3 +660,51 @@ tbody .badge {
 		opacity: 1
 	}
 }
+
+body{
+	background: url('../img/gunung.jpg') fixed center no-repeat;
+            background-size: cover;
+
+}
+
+.container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    padding: 20px 25px;
+    width: 300px;
+
+    border-radius: 5px 10px;
+    background-color:whitesmoke;
+    backdrop-filter: blur(5px);
+   
+}
+.container h1{
+    text-align: center;
+    color: #2979ff;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    border-bottom: 4px solid #2979ff;
+}
+.container label{
+    text-transform: uppercase;
+			font-weight: bold;
+}
+.container form input{
+    border: 1px solid #ddd;
+			padding: 10px;
+			width: 95%;
+			border-radius: 2px;
+			outline: none;
+			margin-top: 10px;
+			margin-bottom: 20px;
+}
+.container form button{
+    width: 100%;
+    padding: 5px 0;
+    border: none;
+    background-color:#2979ff;
+    font-size: 18px;
+    color: #fafafa;
+}
