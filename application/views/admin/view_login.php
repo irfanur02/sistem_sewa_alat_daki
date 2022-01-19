@@ -9,19 +9,14 @@
 <body>
    <div class="container">
           <h1>Login</h1>
-          <form action="<?php echo base_url('Login/login'); ?>"method="post">
+          <form action="<?php echo base_url('Login/authAdmin'); ?>"method="post">
                 <label>Username</label><br>
                 <input type="text" name="username"><br>
-                 <label>Password</label><br>
-                <input type="password" name="password"><br>
-          
-                <button type=submit >Log in</button>
+                <label>Password</label><br>
+                <input type="password" name="password"><br>          
+                <button type=submit >Log in</button><br><br>
+                <center><a href="<?=base_url('DaftarAdmin')?>" class="btn btn-success">Registrasi</a></center>
             </form>
         </div>       
-
 </body>
 </html>
-  
-     
-
-     

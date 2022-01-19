@@ -3,6 +3,6 @@
     <div class="brand">
       <span class="brand-text">Sistem Climber KIT</span>
     </div>
-    <button class="btn">Logout</button>
+    <a href="<?=base_url('Login')?>" class="btn btn-danger">Logout</a>
   </div>
 </nav>
