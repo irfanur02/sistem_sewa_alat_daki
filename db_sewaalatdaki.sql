@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2022 at 12:56 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 7.4.16
+-- Waktu pembuatan: 19 Jan 2022 pada 08.58
+-- Versi server: 10.4.18-MariaDB
+-- Versi PHP: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `akun`
+-- Struktur dari tabel `admin`
+--
+
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
+(1, 'leonardo', '123'),
+(2, 'admin', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `akun`
 --
 
 CREATE TABLE `akun` (
@@ -38,7 +58,7 @@ CREATE TABLE `akun` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bank`
+-- Struktur dari tabel `bank`
 --
 
 CREATE TABLE `bank` (
@@ -50,7 +70,7 @@ CREATE TABLE `bank` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `barang`
+-- Struktur dari tabel `barang`
 --
 
 CREATE TABLE `barang` (
@@ -63,7 +83,7 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `barang`
+-- Dumping data untuk tabel `barang`
 --
 
 INSERT INTO `barang` (`id_barang`, `gambar_barang`, `nama_barang`, `id_kategori`, `jumlah_barang`, `harga_sewa`) VALUES
@@ -74,7 +94,7 @@ INSERT INTO `barang` (`id_barang`, `gambar_barang`, `nama_barang`, `id_kategori`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_penyewaan`
+-- Struktur dari tabel `detail_penyewaan`
 --
 
 CREATE TABLE `detail_penyewaan` (
@@ -87,7 +107,7 @@ CREATE TABLE `detail_penyewaan` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kategori_barang`
+-- Struktur dari tabel `kategori_barang`
 --
 
 CREATE TABLE `kategori_barang` (
@@ -96,7 +116,7 @@ CREATE TABLE `kategori_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kategori_barang`
+-- Dumping data untuk tabel `kategori_barang`
 --
 
 INSERT INTO `kategori_barang` (`id_kategori`, `nama_kategori`) VALUES
@@ -106,7 +126,7 @@ INSERT INTO `kategori_barang` (`id_kategori`, `nama_kategori`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kerusakan`
+-- Struktur dari tabel `kerusakan`
 --
 
 CREATE TABLE `kerusakan` (
@@ -116,7 +136,7 @@ CREATE TABLE `kerusakan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kerusakan`
+-- Dumping data untuk tabel `kerusakan`
 --
 
 INSERT INTO `kerusakan` (`id_kerusakan`, `detail_kerusakan`, `denda_kerusakan`) VALUES
@@ -129,7 +149,7 @@ INSERT INTO `kerusakan` (`id_kerusakan`, `detail_kerusakan`, `denda_kerusakan`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kondisi_barang`
+-- Struktur dari tabel `kondisi_barang`
 --
 
 CREATE TABLE `kondisi_barang` (
@@ -142,7 +162,7 @@ CREATE TABLE `kondisi_barang` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pembayaran`
+-- Struktur dari tabel `pembayaran`
 --
 
 CREATE TABLE `pembayaran` (
@@ -155,7 +175,7 @@ CREATE TABLE `pembayaran` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penyewaan`
+-- Struktur dari tabel `penyewaan`
 --
 
 CREATE TABLE `penyewaan` (
@@ -173,7 +193,7 @@ CREATE TABLE `penyewaan` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profil`
+-- Struktur dari tabel `profil`
 --
 
 CREATE TABLE `profil` (
@@ -189,27 +209,33 @@ CREATE TABLE `profil` (
 --
 
 --
--- Indexes for table `akun`
+-- Indeks untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indeks untuk tabel `akun`
 --
 ALTER TABLE `akun`
   ADD PRIMARY KEY (`id_akun`),
   ADD KEY `id_profil` (`id_profil`);
 
 --
--- Indexes for table `bank`
+-- Indeks untuk tabel `bank`
 --
 ALTER TABLE `bank`
   ADD PRIMARY KEY (`id_bank`);
 
 --
--- Indexes for table `barang`
+-- Indeks untuk tabel `barang`
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`),
   ADD KEY `id_kategori` (`id_kategori`);
 
 --
--- Indexes for table `detail_penyewaan`
+-- Indeks untuk tabel `detail_penyewaan`
 --
 ALTER TABLE `detail_penyewaan`
   ADD PRIMARY KEY (`id_detail_penyewaan`),
@@ -217,19 +243,19 @@ ALTER TABLE `detail_penyewaan`
   ADD KEY `id_penyewaan` (`id_penyewaan`);
 
 --
--- Indexes for table `kategori_barang`
+-- Indeks untuk tabel `kategori_barang`
 --
 ALTER TABLE `kategori_barang`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
--- Indexes for table `kerusakan`
+-- Indeks untuk tabel `kerusakan`
 --
 ALTER TABLE `kerusakan`
   ADD PRIMARY KEY (`id_kerusakan`);
 
 --
--- Indexes for table `kondisi_barang`
+-- Indeks untuk tabel `kondisi_barang`
 --
 ALTER TABLE `kondisi_barang`
   ADD PRIMARY KEY (`id_kondisi_barang`),
@@ -237,7 +263,7 @@ ALTER TABLE `kondisi_barang`
   ADD KEY `id_kerusakan` (`id_kerusakan`);
 
 --
--- Indexes for table `pembayaran`
+-- Indeks untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
   ADD PRIMARY KEY (`id_pembayaran`),
@@ -245,121 +271,127 @@ ALTER TABLE `pembayaran`
   ADD KEY `id_bank` (`id_bank`);
 
 --
--- Indexes for table `penyewaan`
+-- Indeks untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
   ADD PRIMARY KEY (`id_penyewaan`),
   ADD KEY `id_akun` (`id_akun`);
 
 --
--- Indexes for table `profil`
+-- Indeks untuk tabel `profil`
 --
 ALTER TABLE `profil`
   ADD PRIMARY KEY (`id_profil`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `akun`
+-- AUTO_INCREMENT untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `akun`
 --
 ALTER TABLE `akun`
   MODIFY `id_akun` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `bank`
+-- AUTO_INCREMENT untuk tabel `bank`
 --
 ALTER TABLE `bank`
   MODIFY `id_bank` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `barang`
+-- AUTO_INCREMENT untuk tabel `barang`
 --
 ALTER TABLE `barang`
   MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `detail_penyewaan`
+-- AUTO_INCREMENT untuk tabel `detail_penyewaan`
 --
 ALTER TABLE `detail_penyewaan`
   MODIFY `id_detail_penyewaan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `kategori_barang`
+-- AUTO_INCREMENT untuk tabel `kategori_barang`
 --
 ALTER TABLE `kategori_barang`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `kerusakan`
+-- AUTO_INCREMENT untuk tabel `kerusakan`
 --
 ALTER TABLE `kerusakan`
   MODIFY `id_kerusakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `kondisi_barang`
+-- AUTO_INCREMENT untuk tabel `kondisi_barang`
 --
 ALTER TABLE `kondisi_barang`
   MODIFY `id_kondisi_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `pembayaran`
+-- AUTO_INCREMENT untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
   MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `penyewaan`
+-- AUTO_INCREMENT untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
   MODIFY `id_penyewaan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `profil`
+-- AUTO_INCREMENT untuk tabel `profil`
 --
 ALTER TABLE `profil`
   MODIFY `id_profil` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `akun`
+-- Ketidakleluasaan untuk tabel `akun`
 --
 ALTER TABLE `akun`
   ADD CONSTRAINT `akun_ibfk_1` FOREIGN KEY (`id_profil`) REFERENCES `profil` (`id_profil`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `barang`
+-- Ketidakleluasaan untuk tabel `barang`
 --
 ALTER TABLE `barang`
   ADD CONSTRAINT `barang_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_barang` (`id_kategori`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `detail_penyewaan`
+-- Ketidakleluasaan untuk tabel `detail_penyewaan`
 --
 ALTER TABLE `detail_penyewaan`
   ADD CONSTRAINT `detail_penyewaan_ibfk_1` FOREIGN KEY (`id_penyewaan`) REFERENCES `penyewaan` (`id_penyewaan`),
   ADD CONSTRAINT `detail_penyewaan_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
 
 --
--- Constraints for table `kondisi_barang`
+-- Ketidakleluasaan untuk tabel `kondisi_barang`
 --
 ALTER TABLE `kondisi_barang`
   ADD CONSTRAINT `kondisi_barang_ibfk_1` FOREIGN KEY (`id_detail_penyewaan`) REFERENCES `detail_penyewaan` (`id_detail_penyewaan`),
   ADD CONSTRAINT `kondisi_barang_ibfk_2` FOREIGN KEY (`id_kerusakan`) REFERENCES `kerusakan` (`id_kerusakan`);
 
 --
--- Constraints for table `pembayaran`
+-- Ketidakleluasaan untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
   ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`id_penyewaan`) REFERENCES `penyewaan` (`id_penyewaan`),
   ADD CONSTRAINT `pembayaran_ibfk_2` FOREIGN KEY (`id_bank`) REFERENCES `bank` (`id_bank`);
 
 --
--- Constraints for table `penyewaan`
+-- Ketidakleluasaan untuk tabel `penyewaan`
 --
 ALTER TABLE `penyewaan`
   ADD CONSTRAINT `penyewaan_ibfk_1` FOREIGN KEY (`id_akun`) REFERENCES `akun` (`id_akun`) ON UPDATE CASCADE;
